@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Japan Census Shapefiles</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Japan Census Shapefiles</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(jpucd)</span></code></pre></div>
+<p>This package includes shapefiles for local census districts in Ibaraki Prefecture covering the six censuses. These as well as shapefiles for all prefectures can also be downloaded from <a href="https://www.e-stat.go.jp/gis/statmap-search?page=1&amp;type=2&amp;aggregateUnitForBoundary=A&amp;toukeiCode=00200521">e-Stat</a>.</p>
+<div id="original-files" class="section level1">
+<h1>Original files</h1>
+<p>The original shapefiles are in kmz format wrapped in a zip file. The first task is to extract and convert these to geojson. A kmz file is a zipped kml file so the first step is to unzip twice.</p>
+<p>Copies of the original files for Ibaraki Prefecture are in extdata.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">list.files</span>(<span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="dt">package=</span><span class="st">&quot;jpucd&quot;</span>))</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; [1] &quot;A002005212000DDKWC08.zip&quot; &quot;A002005212005DDKWC08.zip&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; [3] &quot;A002005212010DDKWC08.zip&quot; &quot;A002005212015DDKWC08.zip&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; [5] &quot;A002005522009DDKWC08.zip&quot; &quot;A002005522014DDKWC08.zip&quot;</span></span></code></pre></div>
+<p>openkmzzip places the contained kml file in the R temp file folder and returns its path.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(jpucd)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">library</span>(zip)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; </span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt;  次のパッケージを付け加えます: &#39;zip&#39;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt;  以下のオブジェクトは &#39;package:utils&#39; からマスクされています: </span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt; </span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt;      unzip, zip</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>shppath &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="dt">package=</span><span class="st">&quot;jpucd&quot;</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a>shpfile &lt;-<span class="st"> </span><span class="kw">paste</span>(shppath,<span class="kw">list.files</span>(shppath,<span class="dt">pattern=</span><span class="st">&quot;.zip&quot;</span>)[<span class="dv">1</span>],<span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>kmlfile &lt;-<span class="st"> </span><span class="kw">openkmzzip</span>(shpfile)</span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;  要求されたパッケージ fs をロード中です</span></span></code></pre></div>
+</div>
+<div id="extended-data" class="section level1">
+<h1>Extended data</h1>
+<p>These Japanese census shapefiles conform to <a href="http://www.opengis.net/kml/2.2">KML 2.2</a>. Each Placemark element contains ExtendedData that is particularly useful for identifying placemarks and can be used for developing mappings from postal addresses to census districts.</p>
+<table>
+<colgroup>
+<col width="27%"></col>
+<col width="37%"></col>
+<col width="35%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Field</th>
+<th align="left">Typical value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">KEY_CODE</td>
+<td align="left">082010010</td>
+<td align="left">Census district id code, 9 or 11 digits</td>
+</tr>
+<tr class="even">
+<td align="left">PREF</td>
+<td align="left">08</td>
+<td align="left">Prefecture</td>
+</tr>
+<tr class="odd">
+<td align="left">CITY</td>
+<td align="left">201</td>
+<td align="left">Municipality. May be city, ward (in Tokyo), village, etc</td>
+</tr>
+<tr class="even">
+<td align="left">S_AREA</td>
+<td align="left">001000</td>
+<td align="left">Subarea - first 4 digits at cho-oaza level, last 2 at chome-aza level</td>
+</tr>
+<tr class="odd">
+<td align="left">PREF_NAME</td>
+<td align="left">茨城県</td>
+<td align="left">Name of prefecture in Japanese</td>
+</tr>
+<tr class="even">
+<td align="left">CITY_NAME</td>
+<td align="left">水戸市</td>
+<td align="left">Name of municipality</td>
+</tr>
+<tr class="odd">
+<td align="left">S_NAME</td>
+<td align="left">青柳町</td>
+<td align="left">Name of subarea</td>
+</tr>
+<tr class="even">
+<td align="left">KIGO_E</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">HCODE</td>
+<td align="left">8101</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">AREA</td>
+<td align="left">2327255.25</td>
+<td align="left">Area district in square meters</td>
+</tr>
+<tr class="odd">
+<td align="left">PERIMETER</td>
+<td align="left">9591.49414</td>
+<td align="left">Perimeter of area</td>
+</tr>
+<tr class="even">
+<td align="left">h12kaxx_</td>
+<td align="left">803</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">h12kaxx_ID</td>
+<td align="left">802</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">KEN</td>
+<td align="left">08</td>
+<td align="left">Number of prefecture</td>
+</tr>
+<tr class="odd">
+<td align="left">KEN_NAME</td>
+<td align="left">茨城県</td>
+<td align="left">Name of prefecture</td>
+</tr>
+<tr class="even">
+<td align="left">SITYO_NAME</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">DUMMY1</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">GST_NAME</td>
+<td align="left">水戸市</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">CSS_NAME</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">KIHON1</td>
+<td align="left">0010</td>
+<td align="left">Cho-aza level code</td>
+</tr>
+<tr class="odd">
+<td align="left">DUMMY2</td>
+<td align="left">-</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">KIHON2</td>
+<td align="left">00</td>
+<td align="left">Chome-aza level code</td>
+</tr>
+<tr class="odd">
+<td align="left">KEYCODE1</td>
+<td align="left">201001000</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">DUMMY3</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">KEYCODE2</td>
+<td align="left">2010010</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">AREA_MAX_F</td>
+<td align="left">M</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">KIGO_D</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">N_KEN</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">N_CITY</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">N_C1</td>
+<td align="left">0</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">KIGO_I</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">TATE</td>
+<td align="left">0</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">DIR</td>
+<td align="left">0</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">HIGHT</td>
+<td align="left">50</td>
+<td align="left">Height in meters</td>
+</tr>
+<tr class="odd">
+<td align="left">JIKAKU</td>
+<td align="left">10</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">NMOJI</td>
+<td align="left">3</td>
+<td align="left">Number of characters in MOJI</td>
+</tr>
+<tr class="odd">
+<td align="left">DUMMY4</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">MOJI</td>
+<td align="left">青柳町</td>
+<td align="left">Name of subarea</td>
+</tr>
+<tr class="odd">
+<td align="left">SEQ_NO2</td>
+<td align="left">802</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">KSUM</td>
+<td align="left">20</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">CSUM</td>
+<td align="left">22</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">JINKO</td>
+<td align="left">2366</td>
+<td align="left">Population</td>
+</tr>
+<tr class="odd">
+<td align="left">SETAI</td>
+<td align="left">877</td>
+<td align="left">Number of households</td>
+</tr>
+<tr class="even">
+<td align="left">X_CODE</td>
+<td align="left">140.480499</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Y_CODE</td>
+<td align="left">36.392635</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">KCODE1</td>
+<td align="left">0010-00</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Notes:</p>
+<ol class="example" style="list-style-type: decimal">
+<li>KEY_CODE</li>
+</ol>
+<p>KEY_CODE is a unique id for the census district and can be used to relate geojson shapes to district data extracted to a separate csv file. To make into a usable id, 9-digit codes needed to be zero-padded to 11 digits. The full 11-digit code is a concatenation of PREF, CITY, KIHON1 and KIHON2 codes.</p>
+<ol start="2" class="example" style="list-style-type: decimal">
+<li>S_NAME</li>
+</ol>
+<p>S_NAME is usually the geographic name of the district but has issues. This field is not standardized across prefectures and is particularly problematic in Kyoto Prefecture. Named districts may contain other named districts whose names are not in this extended data. These names apparently derive from folder names used by local census offices to manage census tasks.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

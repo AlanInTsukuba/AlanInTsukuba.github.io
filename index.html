@@ -1,7 +1,28 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>JP unified census districts</title>
+        <link rel="stylesheet" href="https://latex.now.sh/style.css"> 
+    </head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<h1>JP unified census districts</h1>
+<p>This project will create an aggregate set of census districts that 
+    covers Japanese census districts at the community level for multiple census 
+    years. The basic idea is that while Japanese municipalities merged extensively 
+    in the early 2000s and continue to merge, community (cho-oaza) have remained 
+    largely unchanged. However, there have been many small boundary changes. Also, 
+    some exurban developments have produced more extensive changes. This project 
+    takes the naive approach of using shapefiles to determine overlaps and merging 
+    districts that overlap more than 1% in either direction. It will cover 
+    census years 2000, 2005, 2010, 2015 and possibly 2020. It will also cover 
+    economic census years 2009 and 2014.</p>
+
+<h2>Vignettes</h2>
+<ul>
+    <li><a href="introduction.html">Introduction</a></li>
+    <li><a href="origshapefiles.html">Original shape files</a></li>
+</ul>
+
+<p>Last update: 2020-6-12</p>
 </body>
 </html>
