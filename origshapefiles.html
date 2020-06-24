@@ -322,9 +322,21 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The original shapefiles are in kmz format wrapped in a zip file. The first task is to extract and convert these to geojson. A kmz file is a zipped kml file so the first step is to unzip twice.</p>
 <p>Copies of the original files for Ibaraki Prefecture are in extdata.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">list.files</span>(<span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="dt">package=</span><span class="st">&quot;jpucd&quot;</span>))</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; [1] &quot;A002005212000DDKWC08.zip&quot; &quot;A002005212005DDKWC08.zip&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; [3] &quot;A002005212010DDKWC08.zip&quot; &quot;A002005212015DDKWC08.zip&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; [5] &quot;A002005522009DDKWC08.zip&quot; &quot;A002005522014DDKWC08.zip&quot;</span></span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt;  [1] &quot;A002005212000DDKWC08.zip&quot;                     </span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt;  [2] &quot;A002005522009DDKWC08.zip&quot;                     </span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt;  [3] &quot;A002005522014DDKWC08.zip&quot;                     </span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;  [4] &quot;JPGen2005CTeconCY2009P08Ibaraki.geojson&quot;      </span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt;  [5] &quot;JPGen2005CTeconCY2014P08Ibaraki.geojson&quot;      </span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt;  [6] &quot;JPGen2005CTgenlCY2000P08Ibaraki.geojson&quot;      </span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;  [7] &quot;JPGen2005CTgenlCY2005P08Ibaraki.geojson&quot;      </span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;  [8] &quot;JPGen2005CTgenlCY2010P08Ibaraki.geojson&quot;      </span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt;  [9] &quot;JPGen2005CTgenlCY2015P08Ibaraki.geojson&quot;      </span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; [10] &quot;TsukubaExpressCensusDistricts2000.geojson&quot;    </span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; [11] &quot;TsukubaExpressCensusDistricts2005.geojson&quot;    </span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; [12] &quot;TsukubaExpressCensusDistricts2010.geojson&quot;    </span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; [13] &quot;TsukubaExpressCensusDistricts2015.geojson&quot;    </span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; [14] &quot;TsukubaExpressEconCensusDistricts2009.geojson&quot;</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; [15] &quot;TsukubaExpressEconCensusDistricts2014.geojson&quot;</span></span></code></pre></div>
 <p>openkmzzip places the contained kml file in the R temp file folder and returns its path.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(jpucd)</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="kw">library</span>(zip)</span>
@@ -337,9 +349,88 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb3-9"><a href="#cb3-9"></a>shpfile &lt;-<span class="st"> </span><span class="kw">paste</span>(shppath,<span class="kw">list.files</span>(shppath,<span class="dt">pattern=</span><span class="st">&quot;.zip&quot;</span>)[<span class="dv">1</span>],<span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)</span>
 <span id="cb3-10"><a href="#cb3-10"></a>kmlfile &lt;-<span class="st"> </span><span class="kw">openkmzzip</span>(shpfile)</span>
 <span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;  要求されたパッケージ fs をロード中です</span></span></code></pre></div>
+<p>Currently, the external data contains the following files:</p>
+<table>
+<colgroup>
+<col width="17%"></col>
+<col width="16%"></col>
+<col width="14%"></col>
+<col width="14%"></col>
+<col width="13%"></col>
+<col width="23%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">File name</th>
+<th align="left">Format</th>
+<th align="center">Census type</th>
+<th align="center">Census year</th>
+<th align="left">Prefecture</th>
+<th align="left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A002005212000DDKWC08.zip</td>
+<td align="left">Zipped kml</td>
+<td align="center">General</td>
+<td align="center">2000</td>
+<td align="left">Ibaraki</td>
+<td align="left">Original file from eStat</td>
+</tr>
+<tr class="even">
+<td align="left">A002005522009DDKWC08.zip</td>
+<td align="left">Zipped kml</td>
+<td align="center">Economic</td>
+<td align="center">2009</td>
+<td align="left">Ibaraki</td>
+<td align="left">Original file from eStat</td>
+</tr>
+<tr class="odd">
+<td align="left">A002005522014DDKWC08.zip</td>
+<td align="left">Zipped kml</td>
+<td align="center">Economic</td>
+<td align="center">2014</td>
+<td align="left">Ibaraki</td>
+<td align="left">Original file from eStat</td>
+</tr>
+<tr class="even">
+<td align="left">JPgenlCY2000P08Ibaraki.geojson.zip</td>
+<td align="left">Zipped geojson</td>
+<td align="center">General</td>
+<td align="center">2000</td>
+<td align="left">Ibaraki</td>
+<td align="left">Converted from eStat file</td>
+</tr>
+<tr class="odd">
+<td align="left">JPgenlCY2005P08Ibaraki.geojson.zip</td>
+<td align="left">Zipped geojson</td>
+<td align="center">General</td>
+<td align="center">2005</td>
+<td align="left">Ibaraki</td>
+<td align="left">Converted from eStat file</td>
+</tr>
+<tr class="even">
+<td align="left">JPgenlCY2010P08Ibaraki.geojson.zip</td>
+<td align="left">Zipped geojson</td>
+<td align="center">General</td>
+<td align="center">2010</td>
+<td align="left">Ibaraki</td>
+<td align="left">Converted from eStat file</td>
+</tr>
+<tr class="odd">
+<td align="left">JPgenlCY2015P08Ibaraki.geojson.zip</td>
+<td align="left">Zipped geojson</td>
+<td align="center">General</td>
+<td align="center">2000</td>
+<td align="left">Ibaraki</td>
+<td align="left">Converted from eStat file</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="extended-data" class="section level1">
-<h1>Extended data</h1>
+<div id="extended-data---original-general-census-files-from-estat" class="section level1">
+<h1>Extended data - Original general census files from eStat</h1>
 <p>These Japanese census shapefiles conform to <a href="http://www.opengis.net/kml/2.2">KML 2.2</a>. Each Placemark element contains ExtendedData that is particularly useful for identifying placemarks and can be used for developing mappings from postal addresses to census districts.</p>
 <table>
 <colgroup>
@@ -392,8 +483,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </tr>
 <tr class="even">
 <td align="left">KIGO_E</td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">E1</td>
+<td align="left">Flag for districts that have multiple shapes. (See note below.)</td>
 </tr>
 <tr class="odd">
 <td align="left">HCODE</td>
@@ -592,11 +683,176 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <ol class="example" style="list-style-type: decimal">
 <li>KEY_CODE</li>
 </ol>
-<p>KEY_CODE is a unique id for the census district and can be used to relate geojson shapes to district data extracted to a separate csv file. To make into a usable id, 9-digit codes needed to be zero-padded to 11 digits. The full 11-digit code is a concatenation of PREF, CITY, KIHON1 and KIHON2 codes.</p>
+<p>KEY_CODE is a unique id for the census district and can be used to relate geojson shapes to district data extracted to a separate csv file. To make into a usable id, 9-digit codes needed to be zero-padded to 11 digits. The full 11-digit code is a concatenation of PREF, CITY, KIHON1 and KIHON2 codes. The KEY_CODE field in eStat shapefiles has severe quality control issues. In this project, unique ids are created by concatenating the digit “1”, PREF, CITY, KIHON1 and KIHON2 fields. The digit “1” serves as a version code; unified districts replace this with the digit “2”.</p>
 <ol start="2" class="example" style="list-style-type: decimal">
 <li>S_NAME</li>
 </ol>
 <p>S_NAME is usually the geographic name of the district but has issues. This field is not standardized across prefectures and is particularly problematic in Kyoto Prefecture. Named districts may contain other named districts whose names are not in this extended data. These names apparently derive from folder names used by local census offices to manage census tasks.</p>
+<ol start="3" class="example" style="list-style-type: decimal">
+<li>KIGO_E</li>
+</ol>
+<p>KIGO_E flags districts with multiple shapes. Shapes are labeled E1, E2, etc. District stats such as population are gathered under shape E1.</p>
+</div>
+<div id="extended-data---original-economic-census-files-from-estat" class="section level1">
+<h1>Extended data - Original economic census files from eStat</h1>
+<p>Shapefiles for the economic census generally correspond to those of the general census. However, enumeration at the cho-oaza and chome-koaza levels differs. If there are no chome-koaza sublevels, the final 6 digits of S_AREA and AZA_CODE are idential to the first 6 digits. If there are sublevels, the first 6 digits indicate the cho-oaza level and the last 6 digits designate the sublevel. For the first sublevel of the set, the last and first 6 digits are identical.</p>
+<table>
+<colgroup>
+<col width="27%"></col>
+<col width="37%"></col>
+<col width="35%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Field</th>
+<th align="left">Typical value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">KEY_CODE</td>
+<td align="left">082010000000018</td>
+<td align="left">Census district id code, 15 digits</td>
+</tr>
+<tr class="even">
+<td align="left">PREF</td>
+<td align="left">08</td>
+<td align="left">Prefecture</td>
+</tr>
+<tr class="odd">
+<td align="left">CITY</td>
+<td align="left">201</td>
+<td align="left">Municipality. May be city, ward (in Tokyo), village, etc</td>
+</tr>
+<tr class="even">
+<td align="left">S_AREA</td>
+<td align="left">001600001800</td>
+<td align="left">Subarea - first 6 digits at cho-oaza level, last 6 at chome-aza level</td>
+</tr>
+<tr class="odd">
+<td align="left">PREF_NAME</td>
+<td align="left">茨城県</td>
+<td align="left">Name of prefecture in Japanese</td>
+</tr>
+<tr class="even">
+<td align="left">CITY_NAME</td>
+<td align="left">水戸市</td>
+<td align="left">Name of municipality</td>
+</tr>
+<tr class="odd">
+<td align="left">S_NAME</td>
+<td align="left">泉町３丁目</td>
+<td align="left">Name of subarea</td>
+</tr>
+<tr class="even">
+<td align="left">KIGO_E</td>
+<td align="left"></td>
+<td align="left">Flag for districts that have multiple shapes. (See note below.)</td>
+</tr>
+<tr class="odd">
+<td align="left">AREA</td>
+<td align="left">62497.287</td>
+<td align="left">Area district in square meters</td>
+</tr>
+<tr class="even">
+<td align="left">PERIMETER</td>
+<td align="left">1029.752</td>
+<td align="left">Perimeter of area in meters</td>
+</tr>
+<tr class="odd">
+<td align="left">KEN</td>
+<td align="left">08</td>
+<td align="left">Number of prefecture</td>
+</tr>
+<tr class="even">
+<td align="left">KEN_NAME</td>
+<td align="left">茨城県</td>
+<td align="left">Name of prefecture</td>
+</tr>
+<tr class="odd">
+<td align="left">CSS_NAME</td>
+<td align="left">水戸市</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">MOJI</td>
+<td align="left">泉町３丁目</td>
+<td align="left">Name of subarea</td>
+</tr>
+<tr class="odd">
+<td align="left">AZA_CODE</td>
+<td align="left">001600001800</td>
+<td align="left">Cho-aza level code</td>
+</tr>
+<tr class="even">
+<td align="left">AREA_MAX_F</td>
+<td align="left">M</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">KIGO_D</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">N_KEN</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">N_CITY</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">N_C1</td>
+<td align="left">0</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">KIGO_I</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">JIGYOSHO</td>
+<td align="left">180</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">JUGYOSHA</td>
+<td align="left">2109</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">X_CODE</td>
+<td align="left">140.46115</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Y_CODE</td>
+<td align="left">36.37999</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">KEYCODE1</td>
+<td align="left">2010000000018</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Notes:</p>
+<ol start="4" class="example" style="list-style-type: decimal">
+<li>KEY_CODE</li>
+</ol>
+<p>KEY_CODE is an id for the census district and can be used to relate geojson shapes to district data extracted to a separate csv file. It may not be unique but can be made unique in combination with KIGO_E.</p>
+<ol start="5" class="example" style="list-style-type: decimal">
+<li><p>S_NAME</p></li>
+<li><p>KIGO_E</p></li>
+</ol>
+<p>KIGO_E flags districts with multiple shapes. Shapes are labeled E1, E2, etc. District stats such as population are gathered under shape E1.</p>
 </div>
 
 

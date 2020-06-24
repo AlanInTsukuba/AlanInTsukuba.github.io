@@ -235,13 +235,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>This package includes shapefiles for local census districts in Ibaraki Prefecture covering the six censuses. These as well as shapefiles for all prefectures can also be downloaded from <a href="https://www.e-stat.go.jp/gis/statmap-search?page=1&amp;type=2&amp;aggregateUnitForBoundary=A&amp;toukeiCode=00200521">e-Stat</a>.</p>
 <p>The original shapefiles are in kmz format wrapped in a zip file. The first task is to extract and convert these to geojson.</p>
 <p>For details, see <a href="origshapefiles.html">Japan Census Shapefiles</a>.</p>
-<div id="subtask-1.1-convert-original-kml-file-to-substitute-district-id-codes-for-feature-names" class="section level2">
-<h2>Subtask 1.1: Convert original kml file to substitute district id codes for feature names</h2>
-<p>The original shapefiles have placenames for each placemark (feature), but these are not unique. Extended data for each placemark can be used to create unique ids that can be used to relate shapes in the geojson file to be produced to data in a csv to be produced in subtask 1.2.</p>
-</div>
-<div id="subtask-1.2-extract-extended-data-into-csv-file" class="section level2">
-<h2>Subtask 1.2: Extract extended data into csv file</h2>
-</div>
+<p>Because R does not have robust and convenient XML packages, a C# program was developed with Microsoft Visual Studio 2008 to produce geojson shapefiles.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
