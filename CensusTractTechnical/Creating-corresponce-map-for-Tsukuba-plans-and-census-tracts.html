@@ -25,15 +25,15 @@
         <li><a href="#data-sources">Data and reference sources</a>
             <ol>
                 <li><a href="#ibaraki-shapefiles">Ibaraki Prefecture census tract shapefiles</a></li>
-                <li>Tsukuba land use map</li>
+                <li><a href="#TsukubaPeripheralTownsMap">Tsukuba City map of peripheral towns</a></li>
                 <li><a href="#ref-kawanaka2015" target=_blank>Kawanaka and Kaneko (2015)</a> classification map</li>
                 <li><a href="https://maps.gsi.go.jp" target=_blank>Geospatial Information Authority of Japan web map</a></li>
             </ol></li>
        </ol>
 </nav>
 <main>
+    <h2 id="data-sources">1. Data and reference sources</h2>
     <article>
-        <h2 id="data-sources">1. Data and reference sources</h2>
         <h3 id="ibaraki-shapefiles">1.1 Ibaraki Prefecture census tract shapefiles</h3>
         <p>Shapefile data for all prefectures of Japan and for each census can be downloaded from 
             <a href="https://www.e-stat.go.jp/gis/statmap-search?type=2">e-Stat</a>. Those for Ibaraki Prefecture 
@@ -106,7 +106,27 @@ can be used to select only Tsukuba census tracts.</p>
 &gt; st_write(tsukubaMP2015, dsnyko, delete_dsn=TRUE,layer="CensusTracts")</code></pre></div>
 <p>This file can then be dragged and dropped onto the maps.gsi.go.jp base map.</p>
     </article>
+    <article>
+        <h3 id="TsukubaPeripheralTownsMap">Tsukuba City map of peripheral towns</h3>
+        <figure style="display:table; float: left; margin-right: 50;">
+            <img src="TsukubaPeripheralTownsMap-zentai-small.png?auto=format&fit=crop&w=350&q=80"
+              loading="lazy" alt="Tsukuba City map of peripheral towns" width="350" height="500"/>
+            <figcaption style="display:table-caption;caption-side: bottom;">
+              <a href="#foot-tsukuba-R8">Tsukuba City map of peripheral towns</a>
+            </figcaption>
+          </figure>
+      </article>
 </main>
+<div id="footnote-section" class="footnotes section level1 numbered">
+    <h3 class="numbered">Footnotes</h3>
+    <div id="foots" class="footnotes hanging-indent">
+        <div id="foot-tsukuba-R8">
+            <p>1. <a href="https://www.city.tsukuba.lg.jp/_res/projects/default_project/_page_/001/004/506/zentai.pdf">
+              Tsukuba peripheral town location map, https://www.city.tsukuba.lg.jp/_res/projects/default_project/_page_/001/004/506/zentai.pdf, 
+              accessed 15 September 2020</a></p>
+        </div>
+    </div>
+</div>
 <div id="references" class="section level1 unnumbered">
     <h3 class="unnumbered">References</h3>
     <div id="refs" class="footnotes hanging-indent">
