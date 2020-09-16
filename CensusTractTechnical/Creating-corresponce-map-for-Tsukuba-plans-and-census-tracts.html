@@ -83,6 +83,11 @@ geographic CRS: WGS 84
 4   372 140.443985 36.394661 0040-00 MULTIPOLYGON (((140.4438 36...
 5     0   140.4841  36.35981 0050-00 MULTIPOLYGON (((140.4847 36...
 6   241 140.487564 36.359901 0050-00 MULTIPOLYGON (((140.488 36....</code></pre>
+<p>The column codes are defined in <a href="origshapefiles.html">origshapefiles.html</a> Tsukuba City is CITY 220, which 
+can be used to select only Tsukuba census tracts.</p>
+<pre><code>&gt; # get Tsukuba tracts
+&gt; tsukubaMP2015<- ib2015gjsn[which(CITY == 220),]
+&gt; tsukubaMP2015<- ib2015gjsn[which(ib2015gjsn$CITY == 220),]</code></pre>
     </article>
 </main>
 <div id="references" class="section level1 unnumbered">
