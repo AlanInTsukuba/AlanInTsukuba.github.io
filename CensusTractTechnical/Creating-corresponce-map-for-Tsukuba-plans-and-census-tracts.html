@@ -22,12 +22,12 @@
 <nav role="navigation" class="toc">
     <h2>Contents</h2>
     <ol>
-        <li><a href="#data-sources">Data sources</a>
+        <li><a href="#data-sources">Data and reference sources</a>
             <ol>
                 <li><a href="ibaraki-shapefiles">Ibaraki Prefecture census tract shapefiles</a></li>
                 <li>Tsukuba land use map</li>
-                <li><a href="#ref-kawanaka2015">Kawanaka and Kaneko (2015)</a> classification map</li>
-                <li><a href="https://maps.gsi.go.jp">Geospatial Information Authority of Japan web map</a></li>
+                <li><a href="#ref-kawanaka2015" target=_blank>Kawanaka and Kaneko (2015)</a> classification map</li>
+                <li><a href="https://maps.gsi.go.jp" target=_blank>Geospatial Information Authority of Japan web map</a></li>
             </ol></li>
        </ol>
 </nav>
@@ -38,22 +38,37 @@
         <p>Shapefile data for all prefectures of Japan and for each census can be downloaded from 
             <a href="https://www.e-stat.go.jp/gis/statmap-search?type=2">e-Stat</a>. Those for Ibaraki Prefecture 
         are included in the R package <a href="https://github.com/AlanInTsukuba/jpucd">AlanInTsukuba/jpucd</a> on Github.</p>
-        <pre><code>
-            library(remotes) # or library(devtools)
-            install_github("AlanInTsukuba/jpucd")
-        </code></pre>
-        <p>The </p>
+        <pre><code>library(remotes) # or library(devtools)
+install_github("AlanInTsukuba/jpucd")</code></pre>
+        <p>Shapefiles downloaded from e-Stat are in KMZ format and were converted to GeoJSON format using a utility written in C#. </p>
+        <pre><code># add census tract file for 2015 general census
+library(jpucd)
+library(sf)
+shppath &lt;- system.file("extdata",package="jpucd")
+list.files(shppath)
+# read in previously converted geojson shapefile
+gjsn2015 &lt;- paste(datapath , "JPGen2005CTgenlCY2015P08Ibaraki.geojson",sep="/")
+ib2015gjsn &lt;- st_read(gjsn2015 )</code></pre>
     </article>
 </main>
 <div id="references" class="section level1 unnumbered">
     <h3 class="unnumbered">References</h3>
     <div id="refs" class="footnotes hanging-indent">
-        </div> 
         <div id="ref-kawanaka2015">
             <p>Kawanaka, Takashi, Hiroshi Kaneko (2015) Tsukuba Science City's problems on formation process through a present state and subjects, 
                 <i>Technical Note of NILIM</i>, 
                 No. 815, January 2015, <a href="http://www.nilim.go.jp/lab/bcg/siryou/tnn/tnn0815.htm" target="_blank">http://www.nilim.go.jp/lab/bcg/siryou/tnn/tnn0815.htm</a></p>
         </div>
     </div>
+</div> 
+<div id="r-citations" class="section level1 unnumbered">
+    <h3 class="unnumbered">R citations</h3>
+    <div id="r-cites" class="footnotes hanging-indent">
+        <div id="rcite-sf">
+            <p>Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector
+                Data. The R Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009</p>
+        </div>
+    </div>
+</div> 
 </body>
 </html>
