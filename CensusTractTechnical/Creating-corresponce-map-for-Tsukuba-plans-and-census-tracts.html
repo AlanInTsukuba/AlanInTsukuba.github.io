@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Creating a correspondence map for Tsukuba plans and census tracts</title>
+
+        <link rel="stylesheet" href="https://latex.now.sh/style.css"> 
+        <meta name="created" content="16 September 2020, 10:50" />
+        <meta name="revised" content="16 September 2020, 16:12" />
+    </head>
+<body>
+    <h3 style="align-content: left;">Technical note</h3>
+    <h1>Creating a correspondence map for Tsukuba plans and census tracts</h1>
+<p class="author"><a href="https://orcid.org/0000-0003-0070-2347">Alan Engel</a><br>Last update: 16 September 2020</p>
+<div class="abstract"><p>Objective: Using R, create maps for comparing census tracts to Tsukuba planning maps.
+</p>
+  <p>This technical note describes a procedure for visualizing and comparing census tracts and planning maps using shapefiles 
+      downloaded from https://www.e-stat.go.jp/ (described in <a href="origshapefiles.html" >Original shape files</a>, and a 
+      <a href="<a href="https://www.city.tsukuba.lg.jp/_res/projects/default_project/_page_/001/004/506/zentai.pdf">planning 
+        map</a> from Tsukuba City, using a classification described by <a href="#ref-kawanaka2015">Kawanaka and Kaneko (2015)</a>.
+  </p>
+</div>
+<nav role="navigation" class="toc">
+    <h2>Contents</h2>
+    <ol>
+        <li><a href="#data-sources">Data sources</a>
+            <ol>
+                <li><a href="ibaraki-shapefiles">Ibaraki Prefecture census tract shapefiles</a></li>
+                <li>Tsukuba land use map</li>
+                <li><a href="#ref-kawanaka2015">Kawanaka and Kaneko (2015)</a> classification map</li>
+                <li><a href="https://maps.gsi.go.jp">Geospatial Information Authority of Japan web map</a></li>
+            </ol></li>
+       </ol>
+</nav>
+<main>
+    <article>
+        <h2 id="data-sources">Data sources</h2>
+        <h3 id="ibaraki-shapefiles">Ibaraki Prefecture census tract shapefiles</h3>
+        <p>Shapefile data for all prefectures of Japan and for each census can be downloaded from 
+            <a href="https://www.e-stat.go.jp/gis/statmap-search?type=2">e-Stat</a>. Those for Ibaraki Prefecture 
+        are included in the R package <a href="https://github.com/AlanInTsukuba/jpucd">AlanInTsukuba/jpucd</a> on Github.</p>
+        <pre><code>
+            library(remotes) # or library(devtools)
+            install_github("AlanInTsukuba/jpucd")
+        </code></pre>
+        <p>The </p>
+    </article>
+</main>
+<div id="references" class="section level1 unnumbered">
+    <h3 class="unnumbered">References</h3>
+    <div id="refs" class="footnotes hanging-indent">
+        </div> 
+        <div id="ref-kawanaka2015">
+            <p>Kawanaka, Takashi, Hiroshi Kaneko (2015) Tsukuba Science City's problems on formation process through a present state and subjects, 
+                <i>Technical Note of NILIM</i>, 
+                No. 815, January 2015, <a href="http://www.nilim.go.jp/lab/bcg/siryou/tnn/tnn0815.htm" target="_blank">http://www.nilim.go.jp/lab/bcg/siryou/tnn/tnn0815.htm</a></p>
+        </div>
+    </div>
+</body>
+</html>
