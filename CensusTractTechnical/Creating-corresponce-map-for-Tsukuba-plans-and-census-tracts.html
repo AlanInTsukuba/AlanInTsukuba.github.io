@@ -98,7 +98,7 @@ can be used to select only Tsukuba census tracts.</p>
 &gt; tsukubaMP2015$X_fillColor &lt;- "#666600"
 &gt; tsukubaMP2015$X_fillOpacity &lt;- 0
 &gt; # change the attribute names to match maps.gsi.go.jp
-&gt; colnames(TsukubaMP2015) &lt;- c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
+&gt; colnames(tsukubaMP2015) &lt;- c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
     ,"KIGO_E", "AREA" , "PERIMETER" ,"geometry","CITYCOL" ,"CITY_ENG","name"         
     , "_color" ,"_opacity" ,"_weight","_fillColor","_fillOpacity")</code></pre></div>
     <p>Finally write this data.frame as a geojson file.</p>
