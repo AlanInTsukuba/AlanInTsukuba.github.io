@@ -41,14 +41,48 @@
         <pre><code>library(remotes) # or library(devtools)
 install_github("AlanInTsukuba/jpucd")</code></pre>
         <p>Shapefiles downloaded from e-Stat are in KMZ format and were converted to GeoJSON format using a utility written in C#. </p>
-        <pre><code># add census tract file for 2015 general census
-library(jpucd)
-library(sf)
-shppath &lt;- system.file("extdata",package="jpucd")
-list.files(shppath)
-# read in previously converted geojson shapefile
-gjsn2015 &lt;- paste(datapath , "JPGen2005CTgenlCY2015P08Ibaraki.geojson",sep="/")
-ib2015gjsn &lt;- st_read(gjsn2015 )</code></pre>
+        <pre><code>&gt; # read census tract file for 2015 general census
+&gt; library(jpucd)
+&gt; library(sf)
+&gt; shppath &lt;- system.file("extdata",package="jpucd")
+&gt; list.files(shppath)
+&gt; # read in previously converted geojson shapefile
+&gt; gjsn2015 &lt;- paste(datapath , "JPGen2005CTgenlCY2015P08Ibaraki.geojson",sep="/")
+&gt; ib2015gjsn &lt;- st_read(gjsn2015 )
+&gt; head(ib2015gjsn)
+Simple feature collection with 6 features and 36 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: 140.406 ymin: 36.35057 xmax: 140.5438 ymax: 36.39631
+geographic CRS: WGS 84
+            jpid    KEY_CODE PREF CITY S_AREA PREF_NAME CITY_NAME     S_NAME KIGO_E HCODE
+1 10820100200100 08201002001   08  201 002001    茨城県    水戸市 赤塚１丁目         8101
+2 10820100200200 08201002002   08  201 002002    茨城県    水戸市 赤塚２丁目         8101
+3 10820100300000   082010030   08  201 003000    茨城県    水戸市     圷大野         8101
+4 10820100400000   082010040   08  201 004000    茨城県    水戸市       曙町         8101
+5 10820100500002   082010050   08  201 005000    茨城県    水戸市     朝日町     E2  8101
+6 10820100500001   082010050   08  201 005000    茨城県    水戸市     朝日町     E1  8101
+        AREA  PERIMETER H27KAxx_ H27KAxx_ID KEN KEN_NAME SITYO_NAME GST_NAME CSS_NAME KIHON1
+1 563757.188 3603.69897     3237       3236  08   茨城県              水戸市            0020
+2 335358.969 2711.66504     1332       1331  08   茨城県              水戸市            0020
+3 1070799.75 5474.47607     2179       2178  08   茨城県              水戸市            0030
+4 79852.6094 1244.79102     1330       1329  08   茨城県              水戸市            0040
+5 17083.2852  643.72699     2388       2387  08   茨城県              水戸市            0050
+6 109892.008 1943.10596     2389       2388  08   茨城県              水戸市            0050
+  DUMMY1 KIHON2  KEYCODE1  KEYCODE2 AREA_MAX_F KIGO_D N_KEN N_CITY KIGO_I       MOJI KBSUM JINKO
+1      -     01 201002001 201002001          M                            赤塚１丁目    34  2876
+2      -     02 201002002 201002002          M                            赤塚２丁目    12  1063
+3      -     00 201003000   2010030          M                                圷大野     4   182
+4      -     00 201004000   2010040          M                                  曙町    11   677
+5      -     00 201005000   2010050                                           朝日町     0     0
+6      -     00 201005000   2010050          M                                朝日町    18   529
+  SETAI     X_CODE    Y_CODE  KCODE1                       geometry
+1  1354 140.415543 36.384178 0020-01 MULTIPOLYGON (((140.4213 36...
+2   459 140.416122 36.388619 0020-02 MULTIPOLYGON (((140.4135 36...
+3    55 140.534119 36.357349 0030-00 MULTIPOLYGON (((140.5414 36...
+4   372 140.443985 36.394661 0040-00 MULTIPOLYGON (((140.4438 36...
+5     0   140.4841  36.35981 0050-00 MULTIPOLYGON (((140.4847 36...
+6   241 140.487564 36.359901 0050-00 MULTIPOLYGON (((140.488 36....</code></pre>
     </article>
 </main>
 <div id="references" class="section level1 unnumbered">
