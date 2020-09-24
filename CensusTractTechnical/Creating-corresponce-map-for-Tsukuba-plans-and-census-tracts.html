@@ -87,20 +87,21 @@ geographic CRS: WGS 84
 <p>The column codes are defined in <a href="origshapefiles.html">origshapefiles.html</a> Tsukuba City is CITY 220, which 
 can be used to select only Tsukuba census tracts.</p>
 <div><pre><code>&gt; # get Tsukuba tracts
-&gt; tsukubaMP2015&lt;- ib2015gjsn[which(CITY == 220),]
-&gt; tsukubaMP2015&lt;- ib2015gjsn[which(ib2015gjsn$CITY == 220),]</code></pre></div>
+&gt; tsukubaMP2015&lt;- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
+,"KIGO_E", "AREA" , "PERIMETER" ,"geometry")]
+</code></pre></div>
 <p>For the shape outlines to be visualized on https://maps.gsi.go.jp, drawing attributes must be added.</p>
 <div><pre><code>&gt; # add properties for maps.gsi.go.jp
-&gt; tsukubaMP2015$name &lt;- paste(tsukubaMP2015$MOJI,"2015",sep="-")
-&gt; tsukubaMP2015$X_color &lt;- "#666600" # names starting with underscore not allowed in R
+&gt; tsukubaMP2015$X_name &lt;- paste(tsukubaMP2015$MOJI,"2015",sep="-")
+&gt; tsukubaMP2015$X_color &lt;- "#ff0000" # names starting with underscore not allowed in R
 &gt; tsukubaMP2015$X_opacity &lt;- 1
 &gt; tsukubaMP2015$X_weight &lt;- 3
 &gt; tsukubaMP2015$X_fillColor &lt;- "#666600"
 &gt; tsukubaMP2015$X_fillOpacity &lt;- 0
 &gt; # change the attribute names to match maps.gsi.go.jp
 &gt; colnames(tsukubaMP2015) &lt;- c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
-    ,"KIGO_E", "AREA" , "PERIMETER" ,"geometry","CITYCOL" ,"CITY_ENG","name"         
-    , "_color" ,"_opacity" ,"_weight","_fillColor","_fillOpacity")</code></pre></div>
+,"KIGO_E", "AREA" , "PERIMETER" ,"geometry","name"         
+, "_color" ,"_opacity" ,"_weight","_fillColor","_fillOpacity")</code></pre></div>
     <p>Finally write this data frame as a geojson file.</p>
     <div><pre><code>&gt; dsnyko &lt;- "TsukubaMasterPlan-2015.geojson"
 &gt; st_write(tsukubaMP2015, dsnyko, delete_dsn=TRUE,layer="CensusTracts")</code></pre></div>
