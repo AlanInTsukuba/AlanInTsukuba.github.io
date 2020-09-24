@@ -26,7 +26,7 @@
             <ol>
                 <li><a href="#ibaraki-shapefiles">Ibaraki Prefecture census tract shapefiles</a></li>
                 <li><a href="#ReferencePlanningMaps">Reference planning maps</a></li>
-                <li><a href="#GSIWebMap">Geospatial Information Authority of Japan web map</a></li>
+                <li><a href="#GSIWebMap">Geospatial Information Authority of Japan (GSI) web map</a></li>
             </ol>
         </li>
     </ol>
@@ -101,7 +101,7 @@ can be used to select only Tsukuba census tracts.</p>
 &gt; colnames(tsukubaMP2015) &lt;- c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
     ,"KIGO_E", "AREA" , "PERIMETER" ,"geometry","CITYCOL" ,"CITY_ENG","name"         
     , "_color" ,"_opacity" ,"_weight","_fillColor","_fillOpacity")</code></pre></div>
-    <p>Finally write this data.frame as a geojson file.</p>
+    <p>Finally write this data frame as a geojson file.</p>
     <div><pre><code>&gt; dsnyko &lt;- "TsukubaMasterPlan-2015.geojson"
 &gt; st_write(tsukubaMP2015, dsnyko, delete_dsn=TRUE,layer="CensusTracts")</code></pre></div>
 <p>This file can then be dragged and dropped onto the maps.gsi.go.jp base map.</p>
@@ -131,15 +131,15 @@ can be used to select only Tsukuba census tracts.</p>
           </p>
       </article>
       <article>
-        <h3 id="GSIWebMap">1.3 Geospatial Information Authority of Japan web map</h3>
+        <h3 id="GSIWebMap">1.3 Geospatial Information Authority of Japan (GSI) web map</h3>
         <figure style="display:table; float: left; margin-right: 50;">
-            <img src="gsibasemap.png?auto=format&fit=crop&w=375&q=80"
-              loading="lazy" alt="GSI base map" width="446" height="275"/>
+            <img src="TractOverlay.png?auto=format&fit=crop&w=300&q=80"
+              loading="lazy" alt="GSI base map with census tract overlay" width="483" height="675"/>
             <figcaption style="display:table-caption;caption-side: bottom;">
-              <a href="#foot-gsi">Geospatial Information Authority of Japan web map</a>
+              <a href="#foot-gsi">GSI base map with census tract overlay</a>
             </figcaption>
         </figure>
-        <p>The GSIA web map is detailed at the building level. </p>
+        <p>The GSI web map is detailed at the structure level. </p>
       </article>
 </main>
 <div id="footnote-section" class="footnotes section level1 numbered">
