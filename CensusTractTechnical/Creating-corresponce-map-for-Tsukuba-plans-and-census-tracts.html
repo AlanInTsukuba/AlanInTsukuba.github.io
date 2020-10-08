@@ -317,10 +317,10 @@ can be used to select only Tsukuba census tracts.</p>
         Encoding(gmlmap$N02_003) %lt;- "unknown"
         Encoding(gmlmap$N02_004) %lt;- "unknown"
         head(gmlmap)
-        txLine %lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
-        plot(txLine["N02_003"])
+        jobanLine %lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
+        plot(jobanLine["N02_003"])
         writepath %lt;- "JobanLine.geojson"
-        st_write(txLine , writepath , delete_dsn=TRUE,layer="RailroadSection")
+        st_write(jobanLine , writepath , delete_dsn=TRUE,layer="RailroadSection")
         
         ## Stations
         mappath %lt;- "N02-18_GML"
@@ -330,10 +330,10 @@ can be used to select only Tsukuba census tracts.</p>
         Encoding(gmlmap$N02_004) %lt;- "unknown"
         Encoding(gmlmap$N02_005) %lt;- "unknown"
         head(gmlmap)
-        txStations %lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
-        plot(txStations ["N02_003"])
+        jobanStations %lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
+        plot(jobanStations["N02_003"])
         writepath %lt;- "JobanLineStations.geojson"
-        st_write(txStations , writepath , delete_dsn=TRUE,layer="Station")        
+        st_write(jobanStations , writepath , delete_dsn=TRUE,layer="Station")        
       </code></pre></div>
     </article>
     <article>
