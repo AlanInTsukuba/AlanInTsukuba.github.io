@@ -266,15 +266,79 @@ can be used to select only Tsukuba census tracts.</p>
     <article>
 
     </article>
+    <article>
     <h2 id="features-map">4. Additional features</h2>
+    <p>The correspondence map in Section 3 is enhanced with accessory maps downloade from the 
+      <a href="https://nlftp.mlit.go.jp/index.html">GIS Home Page</a> of the Ministry of Land, Infrastructure, 
+      and Tourism.
+    </p>
     <article>
         <h3 id="municipal-boundaries">4.1 Municipal boundaries</h3>
+        <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html">Shapefiles for Japanese municipal boundaries</a> are available by prefecture for 1920, 
+          every five years between 1950 and 2005, and annually thereafter. This technical note uses the 
+          <a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#prefecture08">shapefiles</a> for Ibaraki municipalities for 2015.</p>
     </article>
     <article>
       <h3 id="railway-maps">4.2 Railways</h3>
+      <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-v2_3.html">Maps of Japanese railways</a> are available since 2005 and are updated annually. This 
+      technical note uses file N02-18_GML.zip from 2018. </p>
+      <div><pre><code>
+        ### Extract railway maps
+        library(sf)
+        ## Tsukuba Express
+        mappath %lt;- "N02-18_GML" # unzipped GML files from MLIT
+        gmlmap %lt;- st_read(mappath, layer="N02-18_RailroadSection")
+        head(gmlmap)
+        Encoding(gmlmap$N02_003) %lt;- "unknown"
+        Encoding(gmlmap$N02_004) %lt;- "unknown"
+        head(gmlmap)
+        txLine %lt;- with(gmlmap, gmlmap[N02_003 =="常磐新線",]) ## Tsukuba Express
+        plot(txLine["N02_003"])
+        writepath %lt;- "TsukubaExpressLine.geojson"
+        st_write(txLine , writepath , delete_dsn=TRUE,layer="RailroadSection")
+        
+        ## Stations
+        mappath %lt;- "N02-18_GML"
+        gmlmap %lt;- st_read(mappath, layer="N02-18_Station")
+        head(gmlmap)
+        Encoding(gmlmap$N02_003) %lt;- "unknown"
+        Encoding(gmlmap$N02_004) %lt;- "unknown"
+        Encoding(gmlmap$N02_005) %lt;- "unknown"
+        head(gmlmap)
+        txStations %lt;- with(gmlmap, gmlmap[N02_003 =="常磐新線",])
+        plot(txStations ["N02_003"])
+        writepath %lt;- "TsukubaExpressStations.geojson"
+        st_write(txStations , writepath , delete_dsn=TRUE,layer="Station")
+        
+        ## Joban Line
+        mappath %lt;- "N02-18_GML"
+        gmlmap %lt;- st_read(mappath, layer="N02-18_RailroadSection")
+        head(gmlmap)
+        Encoding(gmlmap$N02_003) %lt;- "unknown"
+        Encoding(gmlmap$N02_004) %lt;- "unknown"
+        head(gmlmap)
+        txLine %lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
+        plot(txLine["N02_003"])
+        writepath %lt;- "JobanLine.geojson"
+        st_write(txLine , writepath , delete_dsn=TRUE,layer="RailroadSection")
+        
+        ## Stations
+        mappath %lt;- "N02-18_GML"
+        gmlmap %lt;- st_read(mappath, layer="N02-18_Station")
+        head(gmlmap)
+        Encoding(gmlmap$N02_003) %lt;- "unknown"
+        Encoding(gmlmap$N02_004) %lt;- "unknown"
+        Encoding(gmlmap$N02_005) %lt;- "unknown"
+        head(gmlmap)
+        txStations %lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
+        plot(txStations ["N02_003"])
+        writepath %lt;- "JobanLineStations.geojson"
+        st_write(txStations , writepath , delete_dsn=TRUE,layer="Station")        
+      </code></pre></div>
     </article>
     <article>
       <h3 id="expressway-maps">4.3 Expressways</h3>
+    </article>
     </article>
 </main>
 <div id="footnote-section" class="footnotes section level1 numbered">
