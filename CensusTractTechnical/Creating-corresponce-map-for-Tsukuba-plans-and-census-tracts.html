@@ -10,12 +10,12 @@
 <body>
     <h3 style="align-content: left;">Technical note</h3>
     <h1>Creating a correspondence map for Tsukuba plans and census tracts </h1>
-<p class="author"><a href="https://orcid.org/0000-0003-0070-2347">Alan Engel</a><br>Last update: 9 October 2020</p>
+<p class="author"><a href="https://orcid.org/0000-0003-0070-2347" target=_blank>Alan Engel</a><br>Last update: 9 October 2020</p>
 <div class="abstract"><p>Objective: Using R, create maps for comparing census tracts to Tsukuba planning maps.
 </p>
   <p>This technical note describes a procedure for visualizing and comparing census tracts and planning maps using shapefiles 
-      downloaded from https://www.e-stat.go.jp/ (described in <a href="origshapefiles.html" >Original shape files</a>, and a 
-      <a href="<a href="https://www.city.tsukuba.lg.jp/_res/projects/default_project/_page_/001/004/506/zentai.pdf">planning 
+      downloaded from https://www.e-stat.go.jp/ (described in <a href="origshapefiles.html"  target=_blank>Original shape files</a>, and a 
+      <a href="<a href="https://www.city.tsukuba.lg.jp/_res/projects/default_project/_page_/001/004/506/zentai.pdf" target=_blank>planning 
         map</a> from Tsukuba City, using a classification described by <a href="#ref-kawanaka2015">Kawanaka and Kaneko (2015)</a>.
   </p>
 </div>
@@ -45,8 +45,8 @@
     <article>
         <h3 id="ibaraki-shapefiles">1.1 Ibaraki Prefecture census tract shapefiles</h3>
         <p>Shapefile data for all prefectures of Japan and for each census can be downloaded from 
-            <a href="https://www.e-stat.go.jp/gis/statmap-search?type=2">e-Stat</a>. Those for Ibaraki Prefecture 
-        are included in the R package <a href="https://github.com/AlanInTsukuba/jpucd">AlanInTsukuba/jpucd</a> on Github.</p>
+            <a href="https://www.e-stat.go.jp/gis/statmap-search?type=2" target=_blank>e-Stat</a>. Those for Ibaraki Prefecture 
+        are included in the R package <a href="https://github.com/AlanInTsukuba/jpucd" target=_blank>AlanInTsukuba/jpucd</a> on Github.</p>
         <pre><code>library(remotes) # or library(devtools)
 install_github("AlanInTsukuba/jpucd")</code></pre>
         <p>Shapefiles downloaded from e-Stat are in KMZ format and were converted to GeoJSON format using a utility written in C#. </p>
@@ -93,7 +93,7 @@ geographic CRS: WGS 84
 5     0   140.4841  36.35981 0050-00 MULTIPOLYGON (((140.4847 36...
 6   241 140.487564 36.359901 0050-00 MULTIPOLYGON (((140.488 36....</code></pre></div>
 
-<p>The column codes are defined in <a href="origshapefiles.html">origshapefiles.html</a> Tsukuba City is CITY 220, which 
+<p>The column codes are defined in <a href="origshapefiles.html" target=_blank>origshapefiles.html</a> Tsukuba City is CITY 220, which 
 can be used to select only Tsukuba census tracts.</p>
 <div><pre><code>&gt; # get Tsukuba tracts
 &gt; tsukubaMP2015&lt;- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
@@ -264,19 +264,19 @@ can be used to select only Tsukuba census tracts.</p>
     <article>
     <h2 id="features-map">3. Additional features</h2>
     <p>The correspondence map in Section 4 is enhanced with accessory maps extracted from files downloaded from the 
-      <a href="https://nlftp.mlit.go.jp/index.html">GIS Home Page</a> of the Ministry of Land, Infrastructure, 
+      <a href="https://nlftp.mlit.go.jp/index.html" target=_blank>GIS Home Page</a> of the Ministry of Land, Infrastructure, 
       and Tourism.
     </p>
     <p>The R package <a href="#rcite-jpucd">jpucd</a> contains copies of the geojson files produced in this section.</p>
     <article>
         <h3 id="municipal-boundaries">3.1 Municipal boundaries</h3>
-        <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html">Shapefiles for Japanese municipal boundaries</a> are available by prefecture for 1920, 
+        <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html" target=_blank>Shapefiles for Japanese municipal boundaries</a> are available by prefecture for 1920, 
           every five years between 1950 and 2005, and annually thereafter. This technical note uses the 
-          <a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#prefecture08">shapefiles</a> for Ibaraki municipalities for 2015.</p>
+          <a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#prefecture08" target=_blank>shapefiles</a> for Ibaraki municipalities for 2015.</p>
     </article>
     <article>
       <h3 id="railway-maps">3.2 Railways</h3>
-      <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-v2_3.html">Maps of Japanese railways</a> are available since 2005 and are updated annually. This 
+      <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-v2_3.html" target=_blank>Maps of Japanese railways</a> are available since 2005 and are updated annually. This 
       technical note uses file N02-18_GML.zip from 2018.</p>
       <div><pre><code>
 ### Extract railway maps
@@ -334,7 +334,7 @@ st_write(jobanStations , writepath , delete_dsn=TRUE,layer="Station")
     </article>
     <article>
       <h3 id="expressway-maps">3.3 Expressways</h3>
-      <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-v1_2.html">Maps of Japanese railways</a> are available since 2011 and are updated annually. This 
+      <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-v1_2.html" target=_blank>Maps of Japanese railways</a> are available since 2011 and are updated annually. This 
         technical note uses file N06-15_GML.zip from 2015. Field N06_001 is the fiscal year in which the section was opened and 
       can be used to match stage of completion to census year.</p>
 <div><pre><code>
@@ -458,7 +458,7 @@ dev.off()
     <h3 class="numbered">Footnotes</h3>
     <div id="foots" class="footnotes hanging-indent">
         <div id="foot-tsukuba-R8">
-            <p>1. <a href="https://www.city.tsukuba.lg.jp/_res/projects/default_project/_page_/001/004/506/zentai.pdf">
+            <p>1. <a href="https://www.city.tsukuba.lg.jp/_res/projects/default_project/_page_/001/004/506/zentai.pdf" target=_blank>
               Tsukuba peripheral town location map, https://www.city.tsukuba.lg.jp/_res/projects/default_project/_page_/001/004/506/zentai.pdf, 
               accessed 15 September 2020</a></p>
         </div>
@@ -474,12 +474,12 @@ dev.off()
         <div id="ref-kawanaka2015">
             <p>Kawanaka, Takashi, Hiroshi Kaneko (2015) Tsukuba Science City's problems on formation process through a present state and subjects, 
                 <i>Technical Note of NILIM</i>, 
-                No. 815, January 2015, <a href="http://www.nilim.go.jp/lab/bcg/siryou/tnn/tnn0815.htm" target="_blank">http://www.nilim.go.jp/lab/bcg/siryou/tnn/tnn0815.htm</a></p>
+                No. 815, January 2015, <a href="http://www.nilim.go.jp/lab/bcg/siryou/tnn/tnn0815.htm" target=_blank>http://www.nilim.go.jp/lab/bcg/siryou/tnn/tnn0815.htm</a></p>
         </div>
         <div id="ref-inui2017">
           <p>Inui, Yasuyo (2017) The Details and Characteristics of Residential Development alongside Tsukuba Express Railway – Examination of 21 Century’s Suburban Development, 
             <i>Bulletin of the Faculty of Education, Ibaraki University. Humanities and social sciences</i>, Vol 66, pp 35-50, 30 Mar 2017, 
-            <a href="http://hdl.handle.net/10109/13324" target="_blank">http://hdl.handle.net/10109/13324</a></p>
+            <a href="http://hdl.handle.net/10109/13324" target=_blank>http://hdl.handle.net/10109/13324</a></p>
       </div>
   </div>
 </div> 
@@ -488,7 +488,7 @@ dev.off()
     <div id="r-cites" class="footnotes hanging-indent">
       <div id="rcite-jpucd">
         <p>Engel, Alan 2020. jpucd: JP unified census districts. R package
-          version 0.2.0.9002. <a href="https://github.com/AlanInTsukuba/jpucd">https://github.com/AlanInTsukuba/jpucd</a></p>
+          version 0.2.0.9002. <a href="https://github.com/AlanInTsukuba/jpucd" target=_blank>https://github.com/AlanInTsukuba/jpucd</a></p>
     </div>
     <div id="rcite-sf">
             <p>Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector
