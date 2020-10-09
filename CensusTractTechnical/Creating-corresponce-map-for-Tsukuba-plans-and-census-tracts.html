@@ -5,13 +5,12 @@
 
         <link rel="stylesheet" href="https://latex.now.sh/style.css"> 
         <meta name="created" content="16 September 2020, 10:50" />
-        <meta name="revised" content="25 September 2020, 17:17" />
+        <meta name="revised" content="9 October 2020, 15:06" />
     </head>
 <body>
     <h3 style="align-content: left;">Technical note</h3>
     <h1>Creating a correspondence map for Tsukuba plans and census tracts </h1>
-    <h4>(under construction)</h4>
-<p class="author"><a href="https://orcid.org/0000-0003-0070-2347">Alan Engel</a><br>Last update: 25 September 2020</p>
+<p class="author"><a href="https://orcid.org/0000-0003-0070-2347">Alan Engel</a><br>Last update: 9 October 2020</p>
 <div class="abstract"><p>Objective: Using R, create maps for comparing census tracts to Tsukuba planning maps.
 </p>
   <p>This technical note describes a procedure for visualizing and comparing census tracts and planning maps using shapefiles 
@@ -31,7 +30,6 @@
             </ol>
         </li>
         <li><a href="#tract-plan-table">Correspondence table for census tracts and plans</a></li>
-        <li><a href="#tract-plan-map">Correspondence map for census tracts and plans</a></li>
         <li><a href="features-maps">Additional features</a>
           <ol>
             <li><a href="#municipal-boundaries">Municipal boundaries</a></li>
@@ -39,6 +37,7 @@
             <li><a href="#expressway-maps">Expressways</a></li>
           </ol>
         </li>
+        <li><a href="#tract-plan-map">Correspondence map for census tracts and plans</a></li>
     </ol>
 </nav>
 <main>
@@ -262,26 +261,23 @@ can be used to select only Tsukuba census tracts.</p>
             development plan. If Tsukuba City has designated newer place names, these are appended after the original plan name, e.g., [Katsuragi] Gakuen no Mori 1. 
             </p>
     </article>
-    <h2 id="tract-plan-map">3. Correspondence map for census tracts and plans</h2>
     <article>
-
-    </article>
-    <article>
-    <h2 id="features-map">4. Additional features</h2>
-    <p>The correspondence map in Section 3 is enhanced with accessory maps downloade from the 
+    <h2 id="features-map">3. Additional features</h2>
+    <p>The correspondence map in Section 4 is enhanced with accessory maps extracted from files downloaded from the 
       <a href="https://nlftp.mlit.go.jp/index.html">GIS Home Page</a> of the Ministry of Land, Infrastructure, 
       and Tourism.
     </p>
+    <p>The R package <a href="#rcite-jpucd">jpucd</a> contains copies of the geojson files produced in this section.</p>
     <article>
-        <h3 id="municipal-boundaries">4.1 Municipal boundaries</h3>
+        <h3 id="municipal-boundaries">3.1 Municipal boundaries</h3>
         <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html">Shapefiles for Japanese municipal boundaries</a> are available by prefecture for 1920, 
           every five years between 1950 and 2005, and annually thereafter. This technical note uses the 
           <a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#prefecture08">shapefiles</a> for Ibaraki municipalities for 2015.</p>
     </article>
     <article>
-      <h3 id="railway-maps">4.2 Railways</h3>
+      <h3 id="railway-maps">3.2 Railways</h3>
       <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-v2_3.html">Maps of Japanese railways</a> are available since 2005 and are updated annually. This 
-      technical note uses file N02-18_GML.zip from 2018. </p>
+      technical note uses file N02-18_GML.zip from 2018.</p>
       <div><pre><code>
 ### Extract railway maps
 library(sf)
@@ -337,7 +333,7 @@ st_write(jobanStations , writepath , delete_dsn=TRUE,layer="Station")
       </code></pre></div>
     </article>
     <article>
-      <h3 id="expressway-maps">4.3 Expressways</h3>
+      <h3 id="expressway-maps">3.3 Expressways</h3>
       <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-v1_2.html">Maps of Japanese railways</a> are available since 2011 and are updated annually. This 
         technical note uses file N06-15_GML.zip from 2015.</p>
 <div><pre><code>
@@ -356,13 +352,100 @@ st_write(jobanExpressway , writepath , delete_dsn=TRUE,layer="HighwaySection")
 mappath %lt;- "N06-15_GML"
 gmlmap %lt;- st_read(mappath, layer="N06-15_HighwaySection")
 head(gmlmap)
-kenodo%lt;- with(gmlmap, gmlmap[N06_007 =="首都圏中央連絡自動車道",])
-plot(kenodo["N06_007"])
+kenodo2015 %lt;- with(gmlmap, gmlmap[N06_007 =="首都圏中央連絡自動車道",])
+plot(kenodo2015["N06_007"])
 writepath %lt;- "Kenodo.geojson"
-st_write(kenodo, writepath , delete_dsn=TRUE,layer="Station")
-  
+st_write(kenodo2015, writepath , delete_dsn=TRUE,layer="Station")
 </code></pre></div>
     </article>
+    </article>
+    <h2 id="tract-plan-map">4. Correspondence map for census tracts and plans</h2>
+    <article>
+      <p>This section shows the R code for combining the correspondence table from Section 2 with the shapefiles from Section 1.</p>
+      <p>The first task is to look for errors and omissions in the table. Comparing the correspondence table to data frame tsukubaMP2015 
+        found that 6 tracts were missing. A left outer merge followed by selecting the subset without USE1Code entries produced 
+        a subset that could be written as a geojson file and imported into the <a href="#foot-gsi">GSI web map</a>.
+      </p>
+<div><pre><code>
+# The tract-plan correspondence table is in a csv file
+tract_plan2015 &lt;- read.csv("TsukubaMasterPlan-Tract-Plan-2015.csv",
+  header = TRUE, sep = ",",strip.white = TRUE,na.strings = "NA",
+  colClasses = c("character","character","character","character","character","character","character"))
+head(tract_plan2015)
+
+summary(tract_plan2015)
+summary(tsukubaMP2015)
+## tract_plan2015 has 332 rows, tsukubaMP2015 has 338. 6 are missing from 
+## tract_plan2015
+
+## do left outer merge
+temp &lt;- merge( x = tsukubaMP2015,y = tract_plan2015, by = "jpid", all.x=TRUE)
+head(temp)
+temp[1:338,c("USE1Code")]
+plot(temp[is.na(temp$USE1Code),]["jpid"])
+tempmissing &lt;- temp[is.na(temp$USE1Code),]
+
+dstemp &lt;- "TsukubaMasterPlan-2015-missing.geojson"
+st_write(tempmissing , dstemp , delete_dsn=TRUE,layer="CensusDistricts")
+</code></pre></div>
+<p>The correspondence table can then be merged with the master plan data frame. This is then plotted using a palette 
+  that matches that of Figure 3-4 in <a href="#ref-kawanaka2015">Kawanaka and Kaneko (2015)</a>
+</p>
+<div><pre><code>
+##############################################
+## now with all tracts coded merge and plot
+## redo tsukubaMP2015
+tsukubaMP2015<- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
+,"KIGO_E", "AREA" , "PERIMETER" ,"geometry")]
+tsukubaMP2015 <- merge( x = tsukubaMP2015,y = tract_plan2015, by = "jpid", all.x=TRUE)
+
+## make palette to match Kawanaka & Kaneko 2015
+kawanakapalette <- c("#FFFFFF","#4798C7","#A73986","#F6D9E4","#FFEF43","#AEB534")
+
+plot(tsukubaMP2015["USE1Code"],main="Census tracts and Tsukuba urban plans 2015",
+pal=kawanakapalette ,
+key.pos=3,
+lwd=1, reset=FALSE)
+</code></pre></div>
+<p>Several tracts overlap two or even three plan use classes. Those with second and third uses are marked 
+  with a circle or triangle respectively.
+</p>
+<div><pre><code>
+####### try plotting points at centroids of tracts with USE2Code
+tsukubaMP2015.centroids <- st_centroid(tsukubaMP2015[!is.na(tsukubaMP2015$USE2Code),c("USE2Code","USE3Code","geometry")],of_largest_polygon=TRUE)
+
+png("results02/Census tracts and Tsukuba urban plans 2015.png",width=600,height=900)
+plot(tsukubaMP2015["USE1Code"],main="Census tracts and Tsukuba urban plans 2015",
+pal=kawanakapalette ,
+key.pos=1,key.width=0.05,key.length=.6,
+lwd=1, reset=FALSE)
+plot(tsukubaMP2015.centroids["USE2Code"],
+pal=kawanakapalette , pch=19,cex = 2,
+key.pos=NULL,
+lwd=1, add=TRUE)
+plot(tsukubaMP2015.centroids["USE3Code"],
+pal=kawanakapalette , pch=17,cex = 1,
+key.pos=NULL,
+lwd=1, add=TRUE)
+plot(txline["N02_002"], col="red",key.pos=NULL,  lwd=2,lty=1, axes=FALSE, add=TRUE)
+plot(txstns["N02_002"], col="red", key.pos=NULL,  lwd=12, add=TRUE)
+plot(jobanline["N02_002"],key.pos=NULL,   col="blue",lwd=4,lty=1, axes=FALSE, add=TRUE)
+plot(jobanExpressway["N06_002"], col="purple",key.pos=NULL,  ,lwd=4,lty=1, axes=FALSE, add=TRUE)
+plot(kenodo2015["N06_002"], col="purple",key.pos=NULL,  ,lwd=4,lty=1, axes=FALSE, add=TRUE)
+text(139.988,36.07,"Tsukuba\nExpress", col="red",font=2,pos=2)
+arrows(139.988,36.07,140.06,36.07,col="red",lwd=2)
+text(140.14,35.97,"Joban Railway", col="blue",font=2,pos=4)
+text(139.98,35.99,"Joban\nExpressway", col="purple",font=2, pos=4)
+text(140.147,35.985,"Kenodo\nExpressway", col="purple",font=2, pos=4)
+dev.off()
+</code></pre></div>
+<figure style="display:table; margin-right: 50;">
+  <img src="Census tracts and Tsukuba urban plans 2015.png?auto=format&fit=crop&w=600&q=80"
+    loading="lazy" alt="Census tracts and Tsukuba urban plans - 2015" width="600" height="600" />
+  <figcaption style="display:table-caption;caption-side: bottom;">
+    Census tracts and Tsukuba urban plans - 2015
+  </figcaption>
+</figure> 
     </article>
 </main>
 <div id="footnote-section" class="footnotes section level1 numbered">
@@ -374,7 +457,8 @@ st_write(kenodo, writepath , delete_dsn=TRUE,layer="Station")
               accessed 15 September 2020</a></p>
         </div>
         <div id="foot-gsi">
-            <p>2. <a href="https://maps.gsi.go.jp/#12/36.118464/140.102806/&base=std&ls=std&disp=1&vs=c1j0h0k0l0u0t0z0r0s0m0f1" target=_blank>Geospatial Information Authority of Japan (GSI) web map</a></p>
+            <p>2. <a href="https://maps.gsi.go.jp/#12/36.118464/140.102806/&base=std&ls=std&disp=1&vs=c1j0h0k0l0u0t0z0r0s0m0f1" 
+              target=_blank>Geospatial Information Authority of Japan (GSI) web map</a></p>
         </div>
     </div>
 </div>
@@ -396,7 +480,11 @@ st_write(kenodo, writepath , delete_dsn=TRUE,layer="Station")
 <div id="r-citations" class="section level1 unnumbered">
     <h3 class="unnumbered">R citations</h3>
     <div id="r-cites" class="footnotes hanging-indent">
-        <div id="rcite-sf">
+      <div id="rcite-jpucd">
+        <p>Engel, Alan 2020. jpucd: JP unified census districts. R package
+          version 0.2.0.9002. <a href="https://github.com/AlanInTsukuba/jpucd">https://github.com/AlanInTsukuba/jpucd</a></p>
+    </div>
+    <div id="rcite-sf">
             <p>Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector
                 Data. The R Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009</p>
         </div>
