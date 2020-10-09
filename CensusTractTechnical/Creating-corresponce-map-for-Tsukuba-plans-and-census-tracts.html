@@ -271,8 +271,26 @@ can be used to select only Tsukuba census tracts.</p>
     <article>
         <h3 id="municipal-boundaries">3.1 Municipal boundaries</h3>
         <p><a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html" target=_blank>Shapefiles for Japanese municipal boundaries</a> are available by prefecture for 1920, 
-          every five years between 1950 and 2005, and annually thereafter. This technical note uses the 
-          <a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#prefecture08" target=_blank>shapefiles</a> for Ibaraki municipalities for 2015.</p>
+          every five years between 1950 and 2005, and annually thereafter. This technical note shows the 
+          <a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#prefecture08" target=_blank>shapefiles</a> for Ibaraki municipalities 
+          for 2015 (Heisei 27).</p>
+<div><pre><code>
+## background_maps is local subfolder
+ibdsn2015 &lt;- paste(getwd(),"background_maps","N03-20150101_08_GML",sep="/")
+ib2015admin &lt;- st_read(ibdsn2015)
+head(ib2015admin)
+plot(ib2015admin["N03_007"])
+
+## just Tsukuba
+tsukuba2015outline &lt;- with(ib2015admin, ib2015admin[N03_007 == "08220",])
+plot(tsukuba2015outline["N03_007"])
+
+## can also do following
+plot(ib2015admin[ib2015admin$N03_007 == "08220",]["N03_007"])
+## export
+writepath &lt;- "IbarakiMunicipalBoundaries2015.geojson"
+st_write(ib2015admin, writepath , delete_dsn=TRUE)
+</code></pre></div>
     </article>
     <article>
       <h3 id="railway-maps">3.2 Railways</h3>
@@ -302,7 +320,7 @@ Encoding(gmlmap$N02_004) &lt;- "unknown"
 Encoding(gmlmap$N02_005) &lt;- "unknown"
 head(gmlmap)
 txStations &lt;- with(gmlmap, gmlmap[N02_003 =="常磐新線",])
-plot(txStations ["N02_003"])
+plot(txStations["N02_003"])
 writepath &lt;- "TsukubaExpressStations.geojson"
 st_write(txStations , writepath , delete_dsn=TRUE,layer="Station")
 
