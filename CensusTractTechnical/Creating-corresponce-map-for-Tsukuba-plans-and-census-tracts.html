@@ -282,53 +282,53 @@ can be used to select only Tsukuba census tracts.</p>
 ### Extract railway maps
 library(sf)
 ## Tsukuba Express
-mappath %lt;- "N02-18_GML" # unzipped GML files from MLIT
-gmlmap %lt;- st_read(mappath, layer="N02-18_RailroadSection")
+mappath &lt;- "N02-18_GML" # unzipped GML files from MLIT
+gmlmap &lt;- st_read(mappath, layer="N02-18_RailroadSection")
 head(gmlmap)
-Encoding(gmlmap$N02_003) %lt;- "unknown"
-Encoding(gmlmap$N02_004) %lt;- "unknown"
+Encoding(gmlmap$N02_003) &lt;- "unknown"
+Encoding(gmlmap$N02_004) &lt;- "unknown"
 head(gmlmap)
-txLine %lt;- with(gmlmap, gmlmap[N02_003 =="常磐新線",]) ## Tsukuba Express
+txLine &lt;- with(gmlmap, gmlmap[N02_003 =="常磐新線",]) ## Tsukuba Express
 plot(txLine["N02_003"])
-writepath %lt;- "TsukubaExpressLine.geojson"
+writepath &lt;- "TsukubaExpressLine.geojson"
 st_write(txLine , writepath , delete_dsn=TRUE,layer="RailroadSection")
 
 ## Stations
-mappath %lt;- "N02-18_GML"
-gmlmap %lt;- st_read(mappath, layer="N02-18_Station")
+mappath &lt;- "N02-18_GML"
+gmlmap &lt;- st_read(mappath, layer="N02-18_Station")
 head(gmlmap)
-Encoding(gmlmap$N02_003) %lt;- "unknown"
-Encoding(gmlmap$N02_004) %lt;- "unknown"
-Encoding(gmlmap$N02_005) %lt;- "unknown"
+Encoding(gmlmap$N02_003) &lt;- "unknown"
+Encoding(gmlmap$N02_004) &lt;- "unknown"
+Encoding(gmlmap$N02_005) &lt;- "unknown"
 head(gmlmap)
-txStations %lt;- with(gmlmap, gmlmap[N02_003 =="常磐新線",])
+txStations &lt;- with(gmlmap, gmlmap[N02_003 =="常磐新線",])
 plot(txStations ["N02_003"])
-writepath %lt;- "TsukubaExpressStations.geojson"
+writepath &lt;- "TsukubaExpressStations.geojson"
 st_write(txStations , writepath , delete_dsn=TRUE,layer="Station")
 
 ## Joban Line
-mappath %lt;- "N02-18_GML"
-gmlmap %lt;- st_read(mappath, layer="N02-18_RailroadSection")
+mappath &lt;- "N02-18_GML"
+gmlmap &lt;- st_read(mappath, layer="N02-18_RailroadSection")
 head(gmlmap)
-Encoding(gmlmap$N02_003) %lt;- "unknown"
-Encoding(gmlmap$N02_004) %lt;- "unknown"
+Encoding(gmlmap$N02_003) &lt;- "unknown"
+Encoding(gmlmap$N02_004) &lt;- "unknown"
 head(gmlmap)
-jobanLine %lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
+jobanLine &lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
 plot(jobanLine["N02_003"])
-writepath %lt;- "JobanLine.geojson"
+writepath &lt;- "JobanLine.geojson"
 st_write(jobanLine , writepath , delete_dsn=TRUE,layer="RailroadSection")
 
 ## Stations
-mappath %lt;- "N02-18_GML"
-gmlmap %lt;- st_read(mappath, layer="N02-18_Station")
+mappath &lt;- "N02-18_GML"
+gmlmap &lt;- st_read(mappath, layer="N02-18_Station")
 head(gmlmap)
-Encoding(gmlmap$N02_003) %lt;- "unknown"
-Encoding(gmlmap$N02_004) %lt;- "unknown"
-Encoding(gmlmap$N02_005) %lt;- "unknown"
+Encoding(gmlmap$N02_003) &lt;- "unknown"
+Encoding(gmlmap$N02_004) &lt;- "unknown"
+Encoding(gmlmap$N02_005) &lt;- "unknown"
 head(gmlmap)
-jobanStations %lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
+jobanStations &lt;- with(gmlmap, gmlmap[N02_003 =="常磐線",])
 plot(jobanStations["N02_003"])
-writepath %lt;- "JobanLineStations.geojson"
+writepath &lt;- "JobanLineStations.geojson"
 st_write(jobanStations , writepath , delete_dsn=TRUE,layer="Station")        
       </code></pre></div>
     </article>
@@ -340,21 +340,21 @@ st_write(jobanStations , writepath , delete_dsn=TRUE,layer="Station")
 ### Extract expressway maps
 library(sf)
 ## Joban Expressway
-mappath %lt;- "N06-15_GML"
-gmlmap %lt;- st_read(mappath, layer="N06-15_HighwaySection")
+mappath &lt;- "N06-15_GML"
+gmlmap &lt;- st_read(mappath, layer="N06-15_HighwaySection")
 head(gmlmap)
 jobanExpressway <- with(gmlmap, gmlmap[N06_007 =="常磐自動車道",])
 plot(jobanExpressway["N06_007"])
-writepath %lt;- "JobanExpressway.geojson"
+writepath &lt;- "JobanExpressway.geojson"
 st_write(jobanExpressway , writepath , delete_dsn=TRUE,layer="HighwaySection")
 
 ## Kenodo
-mappath %lt;- "N06-15_GML"
-gmlmap %lt;- st_read(mappath, layer="N06-15_HighwaySection")
+mappath &lt;- "N06-15_GML"
+gmlmap &lt;- st_read(mappath, layer="N06-15_HighwaySection")
 head(gmlmap)
-kenodo2015 %lt;- with(gmlmap, gmlmap[N06_007 =="首都圏中央連絡自動車道",])
+kenodo2015 &lt;- with(gmlmap, gmlmap[N06_007 =="首都圏中央連絡自動車道" &amp; N06_001 &lt; 2016,])
 plot(kenodo2015["N06_007"])
-writepath %lt;- "Kenodo.geojson"
+writepath &lt;- "Kenodo.geojson"
 st_write(kenodo2015, writepath , delete_dsn=TRUE,layer="Station")
 </code></pre></div>
     </article>
@@ -400,12 +400,12 @@ tract_plan2015 &lt;- read.csv("TsukubaMasterPlan-Tract-Plan-2015.csv",
 head(tract_plan2015)
 
 ## redo tsukubaMP2015
-tsukubaMP2015<- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
+tsukubaMP2015 &lt;- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
 ,"KIGO_E", "AREA" , "PERIMETER" ,"geometry")]
-tsukubaMP2015 <- merge( x = tsukubaMP2015,y = tract_plan2015, by = "jpid", all.x=TRUE)
+tsukubaMP2015 &lt;- merge( x = tsukubaMP2015,y = tract_plan2015, by = "jpid", all.x=TRUE)
 
 ## make palette to match Kawanaka & Kaneko 2015
-kawanakapalette <- c("#FFFFFF","#4798C7","#A73986","#F6D9E4","#FFEF43","#AEB534")
+kawanakapalette &lt;- c("#FFFFFF","#4798C7","#A73986","#F6D9E4","#FFEF43","#AEB534")
 
 plot(tsukubaMP2015["USE1Code"],main="Census tracts and Tsukuba urban plans 2015",
 pal=kawanakapalette ,
@@ -417,7 +417,7 @@ lwd=1, reset=FALSE)
 </p>
 <div><pre><code>
 ####### try plotting points at centroids of tracts with USE2Code
-tsukubaMP2015.centroids <- st_centroid(tsukubaMP2015[!is.na(tsukubaMP2015$USE2Code),c("USE2Code","USE3Code","geometry")],of_largest_polygon=TRUE)
+tsukubaMP2015.centroids &lt;- st_centroid(tsukubaMP2015[!is.na(tsukubaMP2015$USE2Code),c("USE2Code","USE3Code","geometry")],of_largest_polygon=TRUE)
 
 png("Census tracts and Tsukuba urban plans 2015.png",width=600,height=900)
 plot(tsukubaMP2015["USE1Code"],main="Census tracts and Tsukuba urban plans 2015",
@@ -432,9 +432,9 @@ plot(tsukubaMP2015.centroids["USE3Code"],
 pal=kawanakapalette , pch=17,cex = 1,
 key.pos=NULL,
 lwd=1, add=TRUE)
-plot(txline["N02_002"], col="red",key.pos=NULL,  lwd=2,lty=1, axes=FALSE, add=TRUE)
-plot(txstns["N02_002"], col="red", key.pos=NULL,  lwd=12, add=TRUE)
-plot(jobanline["N02_002"],key.pos=NULL,   col="blue",lwd=4,lty=1, axes=FALSE, add=TRUE)
+plot(txLine["N02_002"], col="red",key.pos=NULL,  lwd=2,lty=1, axes=FALSE, add=TRUE)
+plot(txStations["N02_002"], col="red", key.pos=NULL,  lwd=12, add=TRUE)
+plot(jobanLine["N02_002"],key.pos=NULL,   col="blue",lwd=4,lty=1, axes=FALSE, add=TRUE)
 plot(jobanExpressway["N06_002"], col="purple",key.pos=NULL,  ,lwd=4,lty=1, axes=FALSE, add=TRUE)
 plot(kenodo2015["N06_002"], col="purple",key.pos=NULL,  ,lwd=4,lty=1, axes=FALSE, add=TRUE)
 text(139.988,36.07,"Tsukuba\nExpress", col="red",font=2,pos=2)
