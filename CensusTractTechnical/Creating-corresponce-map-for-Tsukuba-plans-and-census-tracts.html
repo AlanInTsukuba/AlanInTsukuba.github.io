@@ -394,6 +394,11 @@ st_write(tempmissing , dstemp , delete_dsn=TRUE,layer="CensusDistricts")
 <div><pre><code>
 ##############################################
 ## now with all tracts coded merge and plot
+tract_plan2015 &lt;- read.csv("TsukubaMasterPlan-Tract-Plan-2015.csv",
+  header = TRUE, sep = ",",strip.white = TRUE,na.strings = "NA",
+  colClasses = c("character","character","character","character","character","character","character"))
+head(tract_plan2015)
+
 ## redo tsukubaMP2015
 tsukubaMP2015<- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
 ,"KIGO_E", "AREA" , "PERIMETER" ,"geometry")]
@@ -414,7 +419,7 @@ lwd=1, reset=FALSE)
 ####### try plotting points at centroids of tracts with USE2Code
 tsukubaMP2015.centroids <- st_centroid(tsukubaMP2015[!is.na(tsukubaMP2015$USE2Code),c("USE2Code","USE3Code","geometry")],of_largest_polygon=TRUE)
 
-png("results02/Census tracts and Tsukuba urban plans 2015.png",width=600,height=900)
+png("Census tracts and Tsukuba urban plans 2015.png",width=600,height=900)
 plot(tsukubaMP2015["USE1Code"],main="Census tracts and Tsukuba urban plans 2015",
 pal=kawanakapalette ,
 key.pos=1,key.width=0.05,key.length=.6,
