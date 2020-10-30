@@ -96,10 +96,12 @@ geographic CRS: WGS 84
 <p>The column codes are defined in <a href="origshapefiles.html" target=_blank>origshapefiles.html</a> Tsukuba City is CITY 220, which 
 can be used to select only Tsukuba census tracts.</p>
 <div><pre><code>&gt; # get Tsukuba tracts
-&gt; tsukubaMP2015&lt;- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
+  &gt; tsukubaMP2015&lt;- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME","CITY","MOJI" ,"S_AREA"     
 ,"KIGO_E", "AREA" , "PERIMETER" ,"geometry")]
 </code></pre></div>
-<p>For the shape outlines to be visualized on https://maps.gsi.go.jp, drawing attributes must be added.</p>
+<p>For the shape outlines to be visualized on https://maps.gsi.go.jp, drawing attributes must be added.
+  (<a href-"https://github.com/gsi-cyberjapan/geojson-with-style-spec">Specification</a>)
+</p>
 <div><pre><code>&gt; # add properties for maps.gsi.go.jp
 &gt; tsukubaMP2015$X_name &lt;- paste(tsukubaMP2015$MOJI,"2015",sep="-")
 &gt; tsukubaMP2015$X_color &lt;- "#ff0000" # names starting with underscore not allowed in R
@@ -424,7 +426,7 @@ tsukubaMP2015 &lt;- ib2015gjsn[which(ib2015gjsn$CITY == 220),c("jpid","CITY_NAME
 tsukubaMP2015 &lt;- merge( x = tsukubaMP2015,y = tract_plan2015, by = "jpid", all.x=TRUE)
 
 ## make palette to match Kawanaka & Kaneko 2015
-kawanakapalette &lt;- c("#FFFFFF","#4798C7","#A73986","#F6D9E4","#FFEF43","#AEB534")
+kawanakapalette &lt;- c("#4798C7","#FFFFFF","#A73986","#F6D9E4","orange","#FFEF43","#AEB534")
 
 plot(tsukubaMP2015["USE1Code"],main="Census tracts and Tsukuba urban plans 2015",
 pal=kawanakapalette ,
@@ -463,6 +465,46 @@ text(140.14,35.97,"Joban Railway", col="blue",font=2,pos=4)
 text(139.98,35.99,"Joban\nExpressway", col="purple",font=2, pos=4)
 text(140.147,35.985,"Kenodo\nExpressway", col="purple",font=2, pos=4)
 dev.off()
+</code></pre></div>
+<p>Plot with ggplot</p>
+<div><pre><code>
+  ## plot with ggplot
+  library("ggplot2")
+  library("ggrepel")
+  
+  featurelabels &lt;- data.frame(feature = c("Tsukuba\nExpress","Joban\nRailway",
+    "Joban\nExpressway","Kenodo\nExpressway"), 
+    lat=c(35.987,35.96,35.988, 35.992), lng=c(140.035,140.1400,140.021, 140.16))
+  (featurelabels &lt;- st_as_sf(featurelabels, coords = c("lng", "lat"), remove = FALSE, 
+      crs = 4326, agr = "constant"))
+  
+  png("Census tracts and Tsukuba urban plans 2015.png",width=600,height=900)
+  ggplot(tsukubaMP2015) +
+    geom_sf( aes(fill = USE1Code) ) + theme_void() +
+    scale_fill_manual(values = kawanakapalette ) +
+    geom_sf(data=tsukubaMP2015.centroids[!is.na(tsukubaMP2015.centroids$USE2Code),], 
+    size = 5, shape = 21, aes(fill = USE2Code)) +
+    geom_sf(data=tsukubaMP2015.centroids[!is.na(tsukubaMP2015.centroids$USE3Code),], size = 3, 
+          shape = 24, aes(fill = USE3Code)) +
+    geom_sf(data = ib2010admin, fill = NA, color = "black", size = 1.5 ) + 
+    geom_sf(data = txLine , color = "red", size = 1.5,linetype = "solid") +
+    geom_sf(data = txStations, color = "red", size = 4,shape = 23) +
+    geom_sf(data = jobanLine, color = "blue", size = 1.5,linetype = "solid") +
+    geom_sf(data = jobanExpressway, color = "purple", size = 1.5,linetype = "solid") +
+    geom_sf(data = kenodo, color = "purple", size = 1.5,linetype = "solid") +
+    geom_text_repel(data = featurelabels, aes(x = lng, y = lat, label = feature), 
+          size = 3.5, col = "black" , fontface = "bold", 
+    nudge_x = c(0.020, -0.09, -0.00, 0.1), 
+    nudge_y = c(-0.005, 0.005, 0.025, -0.015)) +
+    geom_text_repel(data = citylabels2005 , aes(x = lng, y = lat, label = city), 
+          size = 6.0, col = "black" , fontface = "bold", segment.size=2, arrow=arrow(ends="last"),
+    nudge_x = c(0.03), 
+    nudge_y = c(0.01)) +
+    coord_sf(xlim = c(139.99,140.18), ylim = c(35.94,36.24), expand = FALSE) +
+    labs(fill='Plan Code') +
+    ggtitle("Census tracts and Tsukuba urban plans", subtitle = "(2015 general census)")
+  dev.off()
+  
 </code></pre></div>
 <figure style="display:table; margin-right: 50;">
   <img src="Census tracts and Tsukuba urban plans 2015.png?auto=format&fit=crop&w=600&q=80"
