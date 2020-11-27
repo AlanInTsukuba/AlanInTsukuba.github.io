@@ -18,7 +18,8 @@ if(label )
 {
 if( label == ref)
 {
-    if(!elmnt.innerHTML.includes("<span class='close'>&times;</span>"))
+    var x = elmnt.getElementsByClassName("close");
+    if(x.length == 0)
     {
         elmnt.insertAdjacentHTML("afterbegin","<span class='close'>&times;</span>")
         elmnt.insertAdjacentHTML("beforeend","<p><a href='RefList.html' target='_blank'>Show full reference list.</p>")
