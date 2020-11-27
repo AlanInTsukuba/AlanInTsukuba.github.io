@@ -20,8 +20,8 @@ if( label == ref)
 {
     if(!elmnt.innerHTML.includes("<span class='close'>&times;</span>"))
     {
-        elmnt.insertAdjacentHTML("afterend","<p><a href='RefList.html' target='_blank'>Show full reference list.</p>")
         elmnt.insertAdjacentHTML("afterbegin","<span class='close'>&times;</span>")
+        elmnt.insertAdjacentHTML("beforeend","<p><a href='RefList.html' target='_blank'>Show full reference list.</p>")
     }
 span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
