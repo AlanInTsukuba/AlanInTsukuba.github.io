@@ -37,4 +37,4 @@
         cursor: pointer;
       }
       
-      .ref_links { cursor: pointer; }
+      span.ref_links { cursor: pointer; }
