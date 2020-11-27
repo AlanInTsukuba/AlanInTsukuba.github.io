@@ -1,0 +1,140 @@
+<html>
+    <head>
+      <meta name="google-site-verification" content="Z7SEnQaO9LAITbhuwGaI3rFtnpMRKeV9BbaW3LyvP2g" />
+      <meta name="revised" content="26 November 2020" />
+        <title>Japanese census tract aggregations for longitudinal economic research</title>
+
+        <link rel="stylesheet" href="https://latex.now.sh/style.css"> 
+    </head>
+    <style>
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+      
+      /* Modal Content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+      
+      /* The Close Button */
+      .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      </style>
+
+    <body>
+        <figure>
+            <img src="Registered Designs - Tsubame-Sanjo.jpg"
+              loading="lazy" alt="Registered Designs - Tsubame-Sanjo" width="600" height="400" />
+            <figcaption>
+              Registered designs by community level unified census tracts - Tsubame-Sanjo<br/>
+              Left: Numbers of designs; Right: Numbers of registrants<br/>
+              <a href="#" onclick="return ShowReference('ref-engel2018');" target="_blank">(Engel 2018)</a>.
+            </figcaption>
+          </figure>        
+          <div id="project-references" class="section level1 unnumbered modal reference-content" w3-include-html="https://alanintsukuba.github.io/RefList.html"></div>
+          <script src="ShowReferences.js"></script>  
+            
+            <!--<script  >
+            function ShowReference(ref)
+            {
+                modal = document.getElementById("project-references");
+                var z, elmnt, label;
+                if(modal)
+                {
+                    if(modal.innerHTML.length == 0)
+                    {
+                        LoadReferences(ref);
+                        return true;
+                    }
+                    z = modal.getElementsByTagName("div");
+                    for(i = 0; i < z.length; i++)
+                    {
+                        elmnt = z[i];
+                        label = elmnt.getAttribute("id");
+                        if(label )
+                        {
+                            if( label == ref)
+                            {
+                                elmnt.insertAdjacentHTML("afterbegin","<span class='close'>&times;</span>")
+                                span = document.getElementsByClassName("close")[0];
+                                span.onclick = function() {
+                                    modal.style.display = "none";
+                                }
+                                elmnt.setAttribute("class", "modal-content");
+                                modal.style.display = "block";
+                                return true;
+                            }
+                        }
+                    }
+                }
+                
+                return false;
+            }
+                    // Get the modal
+            var modal = document.getElementById("project-references");
+            
+            function LoadReferences(ref) {
+                  var z, i, elmnt, file, xhttp;
+                  /* Loop through a collection of all HTML elements: */
+                  z = document.getElementsByClassName("reference-content")
+                  for (i = 0; i < z.length; i++) {
+                    elmnt = z[i];
+                    /*search for elements with a certain atrribute:*/
+                    file = elmnt.getAttribute("w3-include-html");
+                    if (file) {
+                      /* Make an HTTP request using the attribute value as the file name: */
+                      xhttp = new XMLHttpRequest();
+                      xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                          if (this.status == 200) 
+                          {
+                            LoadReferenceDocument(this,ref);
+                          }
+                          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                          /* Remove the attribute, and call this function once more: */
+                          elmnt.removeAttribute("w3-include-html");
+                          LoadReferences();
+                        }
+                      }
+                      xhttp.open("GET", file, true);
+                      xhttp.send();
+                      /* Exit the function: */
+                      return;
+                    }
+                  }
+                }
+
+                function LoadReferenceDocument(xhttp, ref) {
+                document.getElementsByClassName("reference-content")[0].innerHTML =
+                xhttp.responseText;
+                if(ref != null){ShowReference(ref);}
+                }
+                </script>-->
+        </body>
+</html>
