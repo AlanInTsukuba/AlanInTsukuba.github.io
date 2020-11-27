@@ -37,4 +37,7 @@
         cursor: pointer;
       }
       
-      .ref_links:hover { cursor: pointer; }
+      .ref_links:hover { cursor: pointer; 
+        color:blue;
+        text-decoration: underline;
+      }
