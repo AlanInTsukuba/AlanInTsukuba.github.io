@@ -1,3 +1,0 @@
-[1127/133253.788:ERROR:settings.cc(325)] Settings version is not 1
-[1127/160451.641:ERROR:directory_reader_win.cc(43)] FindFirstFile: 指定されたパスが見つかりません。 (0x3)
-[1203/134910.031:ERROR:directory_reader_win.cc(43)] FindFirstFile: 指定されたパスが見つかりません。 (0x3)
