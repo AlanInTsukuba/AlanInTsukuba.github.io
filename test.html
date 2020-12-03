@@ -22,7 +22,7 @@
           <div id="project-references" class="section level1 unnumbered modal reference-content" w3-include-html="https://alanintsukuba.github.io/RefList.html"></div>
           <script src="ShowReferences.js"></script>  
             
-            <!--<script  >
+          <!--  <script  >
             function ShowReference(ref)
             {
                 modal = document.getElementById("project-references");
@@ -43,10 +43,15 @@
                         {
                             if( label == ref)
                             {
-                                elmnt.insertAdjacentHTML("afterbegin","<span class='close'>&times;</span>")
-                                span = document.getElementsByClassName("close")[0];
+                              var x = elmnt.getElementsByClassName("close");
+                              if(x.length == 0)
+                              {
+                                  elmnt.insertAdjacentHTML("afterbegin","<span class='close'>&times;</span>")
+                                  elmnt.insertAdjacentHTML("beforeend","<p><a href='RefList.html' target='_blank'>Show full project reference list.</p>")
+                              }
+                                  span = document.getElementsByClassName("close")[0];
                                 span.onclick = function() {
-                                    modal.style.display = "none";
+                                  modal.style.display = "none";
                                 }
                                 elmnt.setAttribute("class", "modal-content");
                                 modal.style.display = "block";
