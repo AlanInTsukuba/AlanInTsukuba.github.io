@@ -61,7 +61,7 @@
         text-decoration: underline;
       }
 </style>    
-<div id="project-references" class="section level1 unnumbered modal reference-content" w3-include-html="https://alanintsukuba.github.io/RefList.html"></div>
+<div id="project-references" class="section level1 unnumbered modal reference-content" w3-include-xml="https://alanintsukuba.github.io/RefList.xml"></div>
           <figure>
             <img src="Registered Designs - Tsubame-Sanjo.jpg"
               loading="lazy" alt="Registered Designs - Tsubame-Sanjo" width="600" height="400" />
@@ -85,7 +85,7 @@
         // Get the modal
 var modal = document.getElementById("project-references");
 
-function ShowReference(ref)
+function ShowReference(refcite)
 {
   var z, i, elmnt, file, xhttp;
 /* Loop through a collection of all HTML elements: */
@@ -93,7 +93,7 @@ z = document.getElementsByClassName("reference-content")
 for (i = 0; i < z.length; i++) {
 elmnt = z[i];
 /*search for elements with a certain atrribute:*/
-file = elmnt.getAttribute("w3-include-html");
+file = elmnt.getAttribute("w3-include-xml");
 if (file) {
 /* Make an HTTP request using the attribute value as the file name: */
 xhttp = new XMLHttpRequest();
@@ -101,7 +101,7 @@ xhttp.onreadystatechange = function() {
 if (this.readyState == 4) {
 if (this.status == 200) 
 {
-  ShowResult(xhttp.responseXML);
+  showResult(this.responseXML, refcite);
 }
 if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
 }
@@ -114,10 +114,27 @@ return;
 }
 }
 
-function showResult(xml)
+function showResult(xml,refcite)
 {
   var txt = "";
-    path = "/bookstore/book/title";
+  var path = "/references/reference[@id='" + refcite + "']";
+//xml.path  = "/references/reference[@id='" + refcite + "']";
+  if(xml.evaluate)
+  {
+    var nodes = xml.evaluate(path,xml,null,XPathResult.ANY_TYPE, null);
+    var result = nodes.iterateNext();
+        while (result) {
+            txt += result.childNodes[0].nodeValue + "<br>";
+            result = nodes.iterateNext();
+        } 
+  } else if (window.ActiveXObject || xhttp.responseType == "msxml-document") {
+        xml.setProperty("SelectionLanguage", "XPath");
+        nodes = xml.selectNodes(path);
+        for (i = 0; i < nodes.length; i++) {
+            txt += nodes[i].childNodes[0].nodeValue + "<br>";
+        }
+    }
+    document.getElementById("project-references").innerHTML = txt;    
 }
 
 
