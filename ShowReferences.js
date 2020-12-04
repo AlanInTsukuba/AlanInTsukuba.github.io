@@ -70,7 +70,7 @@ function getResult(xml,refcite)
 }
 
 window.onclick = function(event) {
-  if (event.target == modal) {
+  if (event.target != a) {
     modal.style.display = "none";
   }
 }
