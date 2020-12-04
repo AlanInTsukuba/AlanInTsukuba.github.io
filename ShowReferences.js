@@ -1,3 +1,13 @@
+// Get the modal
+var modal = document.getElementById("project-references");
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
 function ShowReference(refcite)
 {
   var z, i, elmnt, file, xhttp;
@@ -62,12 +72,4 @@ function getResult(xml,refcite)
   }
 }
 
-// Get the modal
-var modal = document.getElementById("project-references");
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
