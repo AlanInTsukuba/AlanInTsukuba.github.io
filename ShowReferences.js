@@ -1,8 +1,6 @@
 // Get the modal
 var modal = document.getElementById("project-references");
-
-
-
+var refcontent
 function ShowReference(refcite)
 {
   var z, i, elmnt, file, xhttp;
@@ -63,6 +61,7 @@ function getResult(xml,refcite)
     span.onclick = function() {
         modal.style.display = "none";
     }
+    refcontent = document.getElementById("reference");
     // When the user clicks anywhere outside of the modal, close it
 
     modal.style.display="block"
@@ -70,6 +69,6 @@ function getResult(xml,refcite)
 }
 
 window.onclick = function(event) {
-  if((event.target).parents('modal'))
-    modal.style.display = "none";
+  if(event.target.parentElement != refcontent && event.target.nodeName != "A")
+   { modal.style.display = "none";}
 }
