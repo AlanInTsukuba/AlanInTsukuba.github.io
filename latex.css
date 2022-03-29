@@ -1,9 +1,22 @@
 @import url("https://latex.now.sh/style.css");
 
 /* disable increment for a table */
-table.noincrement {
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: auto;
+    max-width: 100%;
+    border-top: 2.27px solid black;
+    border-bottom: 2.27px solid black;
+    /* display: block; */
+    overflow-x: auto; /* does not work because element is not block */
+    /* white-space: nowrap; */
+    /* counter-increment: caption; */
+  }
+
+/* table.noincrement {
     counter-increment: none;
-}
+}*/
 
 /* Table caption */
 caption {
