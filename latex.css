@@ -1,0 +1,6 @@
+@import https://latex.vercel.app/style.css
+
+/* disable increment for a table */
+table.noincrement {
+    counter-increment: null;
+}
