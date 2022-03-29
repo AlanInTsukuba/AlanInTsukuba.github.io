@@ -1,4 +1,4 @@
-@import https://latex.now.sh/style.css
+@import url("https://latex.now.sh/style.css");
 
 /* disable increment for a table */
 table.noincrement {
