@@ -2,5 +2,5 @@
 
 /* disable increment for a table */
 table.noincrement {
-    counter-increment: null;
+    counter-increment: none;
 }
