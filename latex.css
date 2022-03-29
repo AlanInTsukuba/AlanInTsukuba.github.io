@@ -6,7 +6,7 @@ table.noincrement {
 }
 
 /* Table caption */
-caption.noincrement {
+caption {
     text-align: left;
     font-size: 0.923em;
     /* border-bottom: 2pt solid #000; */
@@ -15,6 +15,6 @@ caption.noincrement {
     margin-left: 0;
 }
   
-caption::before.noincrement {
+caption::before {
     font-weight: bold;
 }
