@@ -4,3 +4,7 @@
 table.noincrement {
     counter-increment: none;
 }
+
+caption::before.noincrement {
+    font-weight: bold;
+}
