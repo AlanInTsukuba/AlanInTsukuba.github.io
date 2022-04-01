@@ -246,6 +246,8 @@
     border-spacing: 0;
     width: auto;
     max-width: 100%;
+    border-top: unset;
+    border-bottom: unset;
     /* display: block; */
     overflow-x: auto; /* does not work because element is not block */
     /* white-space: nowrap; */
