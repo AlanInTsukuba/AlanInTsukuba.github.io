@@ -241,6 +241,16 @@
     /* white-space: nowrap; */
     /* counter-increment: caption; */
   }
+  table.noborder {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: auto;
+    max-width: 100%;
+    /* display: block; */
+    overflow-x: auto; /* does not work because element is not block */
+    /* white-space: nowrap; */
+    /* counter-increment: caption; */
+  }
   /* add bottom border on column table headings  */
   table tr > th[scope='col'] {
     border-bottom: 1.36px solid black;
